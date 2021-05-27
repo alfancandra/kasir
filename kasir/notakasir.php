@@ -51,10 +51,10 @@ $nama=$_SESSION["nama"];
       <!--header start-->
       <header class="header black-bg" style="background: black">
               <div class="sidebar-toggle-box">
-                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+                  <div class="fa fa-bars tooltips" style="color:#1de9b6" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
             <!--logo start-->
-            <a href="index.php" class="logo"><b>KARUNIA PLASTIK</b></a>
+            <a href="index.php" class="logo" style="color:#1de9b6"><b>KARUNIA PLASTIK</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->

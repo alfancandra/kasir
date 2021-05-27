@@ -58,7 +58,7 @@
     <![endif]-->
   </head>
 
-  <body style="background:#004643;color:#fff;">
+  <body style="background:#000;color:#000;">
 
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
@@ -67,21 +67,21 @@
       <div class="container container-table">
 	    <div class="row vertical-center-row">
 	        <div class="text-center col-md-4 col-md-offset-4" >
-	        	<a href="home.php" class="btn btn-primary btn-lg" style="margin-top:20px;">Home</a>
+	        	<a href="home.php" class="btn btn-primary btn-lg" style="margin-top:20px;background: #1de9b6;color:#000;">Home</a>
 	        </div>
 	    </div>
 	  </div>
 	  <div id="login-page" style="padding-top:3pc;">
 	  	<div class="container">
 		      <form class="form-login" method="POST">
-		        <h2 class="form-login-heading">LOGIN ADMIN</h2>
-		        <div class="login-wrap">
+		        <h2 class="form-login-heading" style="background: #000;color:#1de9b6;">LOGIN</h2>
+		        <div class="login-wrap" style="background: #000;border:1px solid #1de9b6;">
 		            <input type="text" class="form-control" name="user" placeholder="User ID" autofocus>
 		            <br>
 		            <input type="password" class="form-control" name="pass" placeholder="Password">
 		            <br>
-		            <button class="btn btn-primary btn-block" name="proses" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
-		            <a href="lupa/index.php">Lupa Password?</a>
+		            <button class="btn btn-primary btn-block" style="background: #1de9b6;color:black;" name="proses" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+		            <a href="lupa/index.php" style="color:#1de9b6">Lupa Password?</a>
 		        </div>
 		      </form>
 	  	</div>

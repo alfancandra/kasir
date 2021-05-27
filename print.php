@@ -20,7 +20,7 @@
 						<p><?php echo $toko['nama_toko'];?></p>
 						<p><?php echo $toko['alamat_toko'];?></p>
 						<p>Tanggal : <?php  echo date("j F Y, G:i");?></p>
-						<p>Kasir : <?php  echo $_GET['nm_member'];?></p>
+						<p>Kasir : <?php  echo $_GET['nama'];?></p>
 					</center>
 					<table class="table table-bordered" style="width:100%;">
 						<tr>
@@ -36,7 +36,8 @@
 							<td><?php echo $isi['jumlah'];?></td>
 							<td><?php echo $isi['total'];?></td>
 						</tr>
-						<?php $no++; }?>
+						<?php $no++; 
+						echo $isi['nama_pelanggan'];}?>
 					</table>
 					<div class="pull-right">
 						<?php $hasil = $lihat -> jumlah(); ?>

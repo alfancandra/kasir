@@ -5,7 +5,7 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <?php 
-		  $id = $_SESSION['admin']['id_member'];
+		  $id = $_SESSION['admin']['id_login'];
 		  $hasil = $lihat -> member_edit($id);
       ?>
       <section id="main-content">
@@ -89,7 +89,7 @@
 														<input type="hidden" name="id_barang" value="<?php echo $isi['id_barang'];?>" class="form-control">
 													</td>
 													<td>Rp.<?php echo number_format($isi['total']);?>,-</td>
-													<td><?php echo $isi['nm_member'];?></td>
+													<td><?php echo $isi['nama'];?></td>
 													<td>
 														<button type="submit" class="btn btn-warning">Update</button>
 												</form>
@@ -117,17 +117,18 @@
 													if($bayar >= $total)
 													{
 														$id_barang = $_POST['id_barang'];
-														$id_member = $_POST['id_member'];
+														$id_kasir = $_POST['id_kasir'];
 														$jumlah = $_POST['jumlah'];
 														$total = $_POST['total1'];
 														$tgl_input = $_POST['tgl_input'];
 														$periode = $_POST['periode'];
 														$jumlah_dipilih = count($id_barang);
+														$nama_pelanggan = $_POST['nama_pelanggan'];
 														
 														for($x=0;$x<$jumlah_dipilih;$x++){
 
-															$d = array($id_barang[$x],$id_member[$x],$jumlah[$x],$total[$x],$tgl_input[$x],$periode[$x]);
-															$sql = "INSERT INTO nota (id_barang,id_member,jumlah,total,tanggal_input,periode) VALUES(?,?,?,?,?,?)";
+															$d = array($id_barang[$x],$id_kasir[$x],$jumlah[$x],$total[$x],$nama_pelanggan,$tgl_input[$x],$periode[$x]);
+															$sql = "INSERT INTO nota (id_barang,id_kasir,jumlah,total,nama_pelanggan,tanggal_input,periode) VALUES(?,?,?,?,?,?,?)";
 															$row = $config->prepare($sql);
 															$row->execute($d);
 
@@ -147,7 +148,6 @@
 															$row_stok->execute(array($total_stok, $idb));
 															
 														}
-														echo '<script>alert("Belanjaan Berhasil Di Bayar !");</script>';
 													}else{
 														echo '<script>alert("Uang Kurang ! Rp.'.$hitung.'");</script>';
 													}
@@ -158,7 +158,7 @@
 											<form method="POST" action="index.php?page=jual&nota=yes#kasirnya">
 												<?php foreach($hasil_penjualan as $isi){;?>
 													<input type="hidden" name="id_barang[]" value="<?php echo $isi['id_barang'];?>">
-													<input type="hidden" name="id_member[]" value="<?php echo $isi['id_member'];?>">
+													<input type="hidden" name="id_kasir[]" value="<?php echo $isi['id_kasir'];?>">
 													<input type="hidden" name="jumlah[]" value="<?php echo $isi['jumlah'];?>">
 													<input type="hidden" name="total1[]" value="<?php echo $isi['total'];?>">
 													<input type="hidden" name="tgl_input[]" value="<?php echo $isi['tanggal_input'];?>">
@@ -179,7 +179,7 @@
 											<!-- aksi ke table nota -->
 											<tr>
 												<td>Kembali</td>
-												<td><input type="text" class="form-control" value="<?php echo $hitung;?>"></td>
+												<td><input type="text" class="form-control" value="<?php echo $hitung;?>" disabled></td>
 												<td></td>
 												<td>
 													<a href="print.php?nm_member=<?php echo $_SESSION['admin']['nm_member'];?>

@@ -31,6 +31,36 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 		echo '<script>window.location="../../index.php?page=kategori&uid='.$id.'&success-edit=edit-data"</script>';
 	}
 
+	if(!empty($_GET['admin'])){
+		$user = htmlentities($_POST['user']);
+		$pass = htmlentities(md5($_POST['pass']));
+		$nama = htmlentities($_POST['nama']);
+		$id = htmlentities($_POST['id_login']);
+		$data[] = $user;
+		$data[] = $pass;
+		$data[] = $nama;
+		$data[] = $id;
+		$sql = 'UPDATE login SET user=?, pass=?, nama=? WHERE id_login = ?';
+		$row = $config->prepare($sql);
+		$row->execute($data);
+		echo '<script>window.location="../../index.php?page=admin&success=edit-data"</script>';
+	}
+
+	if(!empty($_GET['kasir'])){
+		$user = htmlentities($_POST['user']);
+		$pass = htmlentities(md5($_POST['pass']));
+		$nama = htmlentities($_POST['nama']);
+		$id = htmlentities($_POST['id_kasir']);
+		$data[] = $user;
+		$data[] = $pass;
+		$data[] = $nama;
+		$data[] = $id;
+		$sql = 'UPDATE kasir SET user=?, pass=?, nama=? WHERE id_kasir = ?';
+		$row = $config->prepare($sql);
+		$row->execute($data);
+		echo '<script>window.location="../../index.php?page=kasir&success=edit-data"</script>';
+	}
+
 	if(!empty($_GET['stok'])){
 		$restok = htmlentities($_POST['restok']);
 		$id = htmlentities($_POST['id']);
@@ -238,7 +268,7 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 				<td><?php echo $hasil['merk'];?></td>
 				<td><?php echo $hasil['harga_jual'];?></td>
 				<td>
-				<a href="../fungsi/tambah/tambah.php?jual=jual&id=<?php echo $hasil['id_barang'];?>&id_kasir=<?php echo $_SESSION['admin']['id_kasir'];?>" 
+				<a href="fungsi/tambah/tambah.php?jual=jual&id=<?php echo $hasil['id_barang'];?>&id_kasir=<?php echo $_SESSION['admin']['id_kasir'];?>" 
 					class="btn btn-success">
 					<i class="fa fa-shopping-cart"></i></a></td>
 			</tr>
@@ -268,6 +298,7 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 				<th>Merk</th>
 				<th>Harga Jual</th>
 				<th>Aksi</th>
+				<th>Satuan</th>
 			</tr>
 		<?php foreach($hasil1 as $hasil){?>
 			<tr>
@@ -275,6 +306,7 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 				<td><?php echo $hasil['nama_barang'];?></td>
 				<td><?php echo $hasil['merk'];?></td>
 				<td><?php echo $hasil['harga_jual'];?></td>
+				<td><?php echo $hasil['satuan_barang'];?></td>
 				<td>
 				<a href="../fungsi/tambah/tambah.php?jual_kasir=jual&id=<?php echo $hasil['id_barang'];?>&id_kasir=<?php echo $_SESSION['id_kasir'];?>" 
 					class="btn btn-success">

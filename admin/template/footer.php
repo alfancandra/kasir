@@ -1,6 +1,6 @@
    <!--main content end-->
       <!--footer start-->
-      <footer class="site-footer">
+      <footer class="site-footer" style="background: #000;">
           <div class="text-center">
               <?php echo date('Y');?> - Sistem Penjualan Barang Berbasis Web | 
               By KERAD
@@ -30,7 +30,7 @@
     <!--script for this page-->
     <script src="assets/js/sparkline-chart.js"></script>    
 	<script src="assets/js/zabuto_calendar.js"></script>	
-	
+	<script src="dist/Chart.min.js"></script>
 	<script type="text/javascript">
 		//datatable
 		$(function () {
@@ -128,6 +128,29 @@
 				$(".bg-shadow").hide();
 			}
 		</script>
+    <script type="text/javascript">
+        var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+    var stackedBarChartData = $.extend(true, {}, barChartData)
+
+    var stackedBarChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      scales: {
+        xAxes: [{
+          stacked: true,
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      }
+    }
+
+    new Chart(stackedBarChartCanvas, {
+      type: 'bar',
+      data: stackedBarChartData,
+      options: stackedBarChartOptions
+    })
+    </script>
 
   </body>
 </html>

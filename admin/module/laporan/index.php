@@ -55,7 +55,7 @@
 								<tr>
 								<td>
 								<select name="bln" class="form-control">
-									<option selected="selected">Bulan</option>
+									<option selected="selected" value="kosong">Bulan</option>
 									<?php
 										$bulan=array("Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
 										$jlh_bln=count($bulan);
@@ -147,26 +147,65 @@
 										<th style="width:10%;"> Modal</th>
 										<th style="width:10%;"> Total</th>
 										<th> Kasir</th>
+										<th> Pelanggan</th>
 										<th> Tanggal Input</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php 
+									<?php
+										$koneksi = mysqli_connect("localhost","root","","db_toko");
 										$no=1; 
 										if(!empty($_GET['cari'])){
 											$periode = $_POST['bln'].'-'.$_POST['thn'];
 											$no=1; 
 											$jumlah = 0;
 											$bayar = 0;
-											$hasil = $lihat -> periode_jual($periode);
+											if ($_POST['bln']=='kosong') {
+											$sqltahun = mysqli_query($koneksi,"SELECT nota.* , barang.id_barang, barang.nama_barang, barang.harga_beli, kasir.id_kasir,
+												kasir.nama from nota 
+											   left join barang on barang.id_barang=nota.id_barang 
+											   left join kasir on kasir.id_kasir=nota.id_kasir WHERE nota.tanggal_input LIKE '%".$_POST['thn']."%' 
+											   ORDER BY id_nota ASC");
+											$hasil = $sqltahun;
+											}else{
+											$sql1 = mysqli_query($koneksi,"SELECT nota.* , barang.id_barang, barang.nama_barang, barang.harga_beli, kasir.id_kasir,
+												kasir.nama from nota 
+											   left join barang on barang.id_barang=nota.id_barang 
+											   left join kasir on kasir.id_kasir=nota.id_kasir WHERE nota.periode = '".$periode."' 
+											   ORDER BY id_nota ASC");
+											$hasil = $sql1;
+											}
 										}elseif(!empty($_GET['hari'])){
 											$hari = $_POST['hari'];
 											$no=1; 
 											$jumlah = 0;
 											$bayar = 0;
-											$hasil = $lihat -> hari_jual($hari);
+											$ex = explode('-', $hari);
+											$monthNum  = $ex[1];
+											$monthName = date('F', mktime(0, 0, 0, $monthNum, 10));
+											if($ex[2] > 9)
+											{
+												$tgl = $ex[2];
+											}else{
+												$tgl1 = explode('0',$ex[2]);
+												$tgl = $tgl1[1];
+											}
+											$cek = $tgl.' '.$monthName.' '.$ex[0];
+											$sql2 = mysqli_query($koneksi,"SELECT nota.* , barang.id_barang, barang.nama_barang,  barang.harga_beli, kasir.id_kasir,
+												kasir.nama from nota 
+											   left join barang on barang.id_barang=nota.id_barang 
+											   left join kasir on kasir.id_kasir=nota.id_kasir WHERE nota.tanggal_input LIKE '%".$cek."%' 
+											   ORDER BY id_nota ASC");
+											$hasil = $sql2;
 										}else{
-											$hasil = $lihat -> jual();
+											$sekarang = date('m-Y');
+											$sql3 = mysqli_query($koneksi,"SELECT nota.* , barang.id_barang, barang.nama_barang, barang.harga_beli, kasir.id_kasir,
+												kasir.nama from nota 
+											   left join barang on barang.id_barang=nota.id_barang 
+											   left join kasir on kasir.id_kasir=nota.id_kasir 
+											   where nota.periode = '".$sekarang."'
+											   ORDER BY id_nota DESC");
+											$hasil = $sql3;
 										}
 									?>
 									<?php 
@@ -185,7 +224,8 @@
 										<td><?php echo $isi['jumlah'];?> </td>
 										<td>Rp.<?php echo number_format($isi['harga_beli']* $isi['jumlah']);?>,-</td>
 										<td>Rp.<?php echo number_format($isi['total']);?>,-</td>
-										<td><?php echo $isi['nm_member'];?></td>
+										<td><?php echo $isi['nama'];?></td>
+										<td><?php echo $isi['nama_pelanggan'];?></td>
 										<td><?php echo $isi['tanggal_input'];?></td>
 									</tr>
 									<?php $no++; }?>

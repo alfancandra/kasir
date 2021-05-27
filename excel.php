@@ -55,18 +55,34 @@
                     <th style="width:10%;"> Modal</th>
                     <th style="width:10%;"> Total</th>
                     <th> Kasir</th>
+                    <th> Pelanggan</th>
                     <th> Tanggal Input</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
                     $no=1; 
+                    $koneksi = mysqli_connect("localhost","root","","db_toko");
                     if(!empty($_GET['cari'])){
                         $periode = $_GET['bln'].'-'.$_GET['thn'];
                         $no=1; 
                         $jumlah = 0;
                         $bayar = 0;
-                        $hasil = $lihat -> periode_jual($periode);
+                        if ($_GET['bln']=='kosong') {
+                        $sqltahun = mysqli_query($koneksi,"SELECT nota.* , barang.id_barang, barang.nama_barang, barang.harga_beli, kasir.id_kasir,
+                            kasir.nama from nota 
+                           left join barang on barang.id_barang=nota.id_barang 
+                           left join kasir on kasir.id_kasir=nota.id_kasir WHERE nota.tanggal_input LIKE '%".$_GET['thn']."%' 
+                           ORDER BY id_nota ASC");
+                        $hasil = $sqltahun;
+                        }else{
+                        $sql1 = mysqli_query($koneksi,"SELECT nota.* , barang.id_barang, barang.nama_barang, barang.harga_beli, kasir.id_kasir,
+                            kasir.nama from nota 
+                           left join barang on barang.id_barang=nota.id_barang 
+                           left join kasir on kasir.id_kasir=nota.id_kasir WHERE nota.periode = '".$periode."' 
+                           ORDER BY id_nota ASC");
+                        $hasil = $sql1;
+                        }
                     }elseif(!empty($_GET['hari'])){
                         $hari = $_GET['tgl'];
                         $no=1; 
@@ -93,7 +109,8 @@
                     <td><?php echo $isi['jumlah'];?> </td>
                     <td>Rp.<?php echo number_format($isi['harga_beli']* $isi['jumlah']);?>,-</td>
                     <td>Rp.<?php echo number_format($isi['total']);?>,-</td>
-                    <td><?php echo $isi['nm_member'];?></td>
+                    <td><?php echo $isi['nama'];?></td>
+                    <td><?php echo $isi['nama_pelanggan'];?></td>
                     <td><?php echo $isi['tanggal_input'];?></td>
                 </tr>
                 <?php $no++; }?>

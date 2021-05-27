@@ -18,7 +18,7 @@
 
 			function kasir($id){
 				$sql = "select *
-						from kasir where id_login= ?";
+						from kasir where id_kasir= ?";
 				$row = $this-> db -> prepare($sql);
 				$row -> execute(array($id));
 				$hasil = $row -> fetch();
@@ -77,6 +77,22 @@
 						ORDER BY id DESC";
 				$row = $this-> db -> prepare($sql);
 				$row -> execute();
+				$hasil = $row -> fetchAll();
+				return $hasil;
+			}
+
+			function admin_user(){
+				$sql = "SELECT * FROM login ORDER BY id_login ASC";
+				$row = $this-> db -> prepare($sql);
+				$row->execute();
+				$hasil = $row -> fetchAll();
+				return $hasil;
+			}
+
+			function kasir_user(){
+				$sql = "SELECT * FROM kasir ORDER BY id_kasir ASC";
+				$row = $this-> db -> prepare($sql);
+				$row->execute();
 				$hasil = $row -> fetchAll();
 				return $hasil;
 			}

@@ -8,7 +8,7 @@
   $hasil_profil = $lihat -> admin($id);
 ?>
       <aside>
-          <div id="sidebar"  class="nav-collapse ">
+          <div id="sidebar"  class="nav-collapse " style="background: black;">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
@@ -26,24 +26,47 @@
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-desktop"></i>
-                          <span>Master <span style="padding-left:2px;"> <i class="fa fa-angle-down"></i></span></span>
+                          <span>Barang <span style="padding-left:2px;"> <i class="fa fa-angle-down"></i></span></span>
                       </a>
                       <ul class="sub">
                           <li><a  href="index.php?page=barang">Barang</a></li>
                           <li><a  href="index.php?page=kategori">Kategori</a></li>
-                          <li><a  href="index.php?page=user">User</a></li>
+                          <!-- <li><a  href="index.php?page=user">User</a></li> -->
                       </ul>
                   </li>
+
                   <li class="sub-menu">
                       <a href="javascript:;" >
-                          <i class="fa fa-desktop"></i>
-                          <span>Transaksi <span style="padding-left:2px;"> <i class="fa fa-angle-down"></i></span></span>
+                          <i class="fa fa-table"></i>
+                          <span>User <span style="padding-left:2px;"> <i class="fa fa-angle-down"></i></span></span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="index.php?page=jual">Transaksi Jual</a></li>
-                          <li><a  href="index.php?page=laporan">Laporan Penjualan</a></li>
+                          <li><a  href="index.php?page=admin">Admin</a></li>
+                          <li><a  href="index.php?page=kasir">Kasir</a></li>
                       </ul>
                   </li>
+
+                  <li class="">
+                      <a href="index.php?page=laporan">
+                          <i class="fa fa-folder-open-o"></i>
+                          <span>Laporan Penjualan</span>
+                      </a>
+                  </li>
+
+                  <li class="">
+                      <a href="index.php?page=cetaknota">
+                          <i class="fa fa-print"></i>
+                          <span>Cetak Nota</span>
+                      </a>
+                  </li>
+
+                  <!-- <li class="">
+                      <a href="index.php?page=jual">
+                          <i class="fa fa-desktop"></i>
+                          <span>Transaksi</span>
+                      </a>
+                  </li> -->
+
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-cog"></i>

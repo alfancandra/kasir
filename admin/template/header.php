@@ -10,6 +10,8 @@
     <title>Sistem Penjualan Barang Berbasis Web </title>
 
     <!-- Bootstrap core CSS -->
+    <!-- Google Font: Source Sans Pro -->
+    <script type="text/javascript" src="admin/template/dist/Chart.js"></script>
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <!--external css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
@@ -27,7 +29,7 @@
         <script type="text/javascript" src="assets/datatables/dataTables.bootstrap.js"></script>
         <script type="text/javascript" src="assets/js/jquery-2.2.3.min.js"></script>
     <style>
-		.header{background:#328f6b; color:#fff;}
+		.header{background:#000; color:#fff;}
 		#main-content{ background:#fff;}
 		#hidden {display:none}
 	</style>
@@ -57,7 +59,7 @@
             </div>
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-                    <li><a class="logout" onclick="javascript: return confirm('Ingin Logout ?');" href="logout.php">Logout</a></li>
+                    <li><a class="logout" style="background: #1de9b6" onclick="javascript: return confirm('Ingin Logout ?');" href="logout.php">Logout</a></li>
             	</ul>
             </div>
         </header>

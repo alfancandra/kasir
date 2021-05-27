@@ -204,6 +204,10 @@
 													<select name="satuan" class="form-control" required>
 														<option value="#">Pilih Satuan</option>
 														<option value="PCS">PCS</option>
+														<option value="PAK">PAK</option>
+														<option value="BAL">BAL</option>
+														<option value="KG">KG</option>
+														<option value="KARTON">KARTON</option>
 													</select>
 												</td>
 											</tr>

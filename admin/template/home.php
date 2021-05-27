@@ -98,21 +98,135 @@
       *********************************************************************************************************************************************************** -->                  
                   
 			<div class="col-lg-3 ds">
-				<div id="calendar" class="mb">
-					<div class="panel green-panel no-margin">
-						<div class="panel-body">
-							<div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
-								<div class="arrow"></div>
-								<h3 class="popover-title" style="disadding: none;"></h3>
-								<div id="date-popover-content" class="popover-content"></div>
-							</div>
-							<div id="my-calendar"></div>
-						</div>
-					</div>
-				</div><!-- / calendar -->
+				
 			  </div><!-- /col-lg-3 -->
-		  </div><! --/row -->
-		 <div class="clearfix" style="padding-top:18%;"></div>
-	  </section>
-  </section>
+		</div><!-- /row -->
+		<hr>
+		<div class="row">
+			  <?php
+			  $koneksi = mysqli_connect("localhost","root","","db_toko");
+			  $label = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+			  for($bulan = 0;$bulan < 12;$bulan++)
+				{
+					// produk
+					$tahun = date('Y');
+					$perbulan = $label[$bulan];
+					$query = mysqli_query($koneksi,"select sum(jumlah) as jumlah from nota where tanggal_input LIKE '%".$perbulan."%' AND tanggal_input LIKE '%".$tahun."%';");
+					$row = $query->fetch_array();
+					$jumlah_produk[] = $row['jumlah'];
+					// pendapatan
+					$sql = mysqli_query($koneksi,"SELECT SUM(total) as total from nota WHERE tanggal_input LIKE '%".$perbulan."%' AND 
+						tanggal_input LIKE '%".$tahun."%';");
+					$row2 = $sql->fetch_array();
+					$jumlah_pendapatan[] = $row2['total'];
+				}
+			  ?>
 
+			  <div class="col-md-3">
+			  	<h2>Grafik Penjualan Tahun <?php echo $tahun; ?></h2>
+			  	<div style="width: 600px;height: 500px">
+					<canvas id="myChart"></canvas>
+				</div>
+			  </div>
+			  <div class="col-md-4" style="margin-left: 150px;">
+			  	<h2>Grafik Pendapatan Tahun <?php echo $tahun; ?></h2>
+			  	<div style="width: 600px;height: 500px">
+					<canvas id="penghasilan"></canvas>
+				</div>
+			  </div>
+		  </div>
+	  </section>
+	  
+  </section>
+<script>
+		var ctx = document.getElementById("myChart").getContext('2d');
+		var myChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: <?php echo json_encode($label); ?>,
+				datasets: [{
+					label: 'Barang Terjual',
+					data: <?php echo json_encode($jumlah_produk); ?>,
+					backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+					],
+					borderColor: [
+					'rgba(255,99,132,1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero:true
+						}
+					}]
+				}
+			}
+		});
+		var ctx2 = document.getElementById("penghasilan").getContext('2d');
+		var penghasilan = new Chart(ctx2, {
+			type: 'line',
+			data: {
+				labels: <?php echo json_encode($label); ?>,
+				datasets: [{
+					label: 'Pendapatan',
+					data: <?php echo json_encode($jumlah_pendapatan); ?>,
+					backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+					],
+					borderColor: [
+					'rgba(255,99,132,1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+					],
+					borderWidth: 1
+				}]
+			},
+			options: {
+				tooltips: {
+		         callbacks: {
+		            label: function(t, d) {
+		               var xLabel = d.datasets[t.datasetIndex].label;
+		               var yLabel = t.yLabel >= 1000 ? 'Rp. ' + t.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '$' + t.yLabel;
+		               return xLabel + ': ' + yLabel;
+		            }
+		         }
+		      },
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero:true,
+							callback: function(value, index, values) {
+				              if(parseInt(value) >= 1000){
+				                return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				              } else {
+				                return 'Rp. ' + value;
+				              }
+				            }
+						}
+					}]
+				}
+			}
+		});
+	</script>

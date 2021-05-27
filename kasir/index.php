@@ -55,7 +55,7 @@ $nama=$_SESSION["nama"];
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
       <!--header start-->
-      <header class="header black-bg">
+      <header class="header black-bg" style="background: black">
               <div class="sidebar-toggle-box">
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
@@ -89,9 +89,15 @@ $nama=$_SESSION["nama"];
                       </a>
                   </li>
                   <li class="">
-                      <a href="index.php">
+                      <a href="notakasir.php">
                           <i class="fa fa-desktop"></i>
                           <span>Laporan Penjualan</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a href="nota.php">
+                          <i class="fa fa-folder-open-o"></i>
+                          <span>Cetak Ulang Nota</span>
                       </a>
                   </li>
               </ul>
@@ -99,9 +105,8 @@ $nama=$_SESSION["nama"];
           </div>
       </aside>
     </section>
-      <div class="container">
-          <div class="container">
-          	<h1 align="center">KASIR</h1>
+    <section id="main-content">
+    	<section class="wrapper">
           	<h1 align="center">KASIR</h1>
               <div class="row">
                   <div class="col main-chart">
@@ -220,17 +225,22 @@ $nama=$_SESSION["nama"];
 													if($bayar >= $total)
 													{
 														$id_barang = $_POST['id_barang'];
-														$id_member = $_POST['id_member'];
+														$id_kasir = $_POST['id_kasir'];
 														$jumlah = $_POST['jumlah'];
 														$total = $_POST['total1'];
 														$tgl_input = $_POST['tgl_input'];
 														$periode = $_POST['periode'];
 														$jumlah_dipilih = count($id_barang);
-														
+														$nama_pelanggan = $_POST['nama_pelanggan'];
+														$unique = uniqid().date("Y-m-d H:i:s");
 														for($x=0;$x<$jumlah_dipilih;$x++){
 
-															$d = array($id_barang[$x],$id_member[$x],$jumlah[$x],$total[$x],$tgl_input[$x],$periode[$x]);
-															$sql = "INSERT INTO nota (id_barang,id_member,jumlah,total,tanggal_input,periode) VALUES(?,?,?,?,?,?)";
+															$d = array($id_barang[$x],$id_kasir[$x],$jumlah[$x],$total[$x],$nama_pelanggan,$tgl_input[$x],$periode[$x]);
+															$gg = array($unique,$id_barang[$x],$id_kasir[$x],$jumlah[$x],$total[$x],$nama_pelanggan,$tgl_input[$x],$periode[$x]);
+															$sql = "INSERT INTO nota (id_barang,id_kasir,jumlah,total,nama_pelanggan,tanggal_input,periode) VALUES(?,?,?,?,?,?,?)";
+															$sql2 = "INSERT INTO nota_backup (id_nota,id_barang,id_kasir,jumlah,total,nama_pelanggan,tanggal_input,periode) VALUES(?,?,?,?,?,?,?,?)";
+															$row2 = $config->prepare($sql2);
+															$row2->execute($gg);
 															$row = $config->prepare($sql);
 															$row->execute($d);
 
@@ -257,10 +267,10 @@ $nama=$_SESSION["nama"];
 											}
 											?>
 											<!-- aksi ke table nota -->
-											<form method="POST" action="index.php?page=jual&nota=yes#kasirnya">
+											<form method="POST" action="index.php?nota=yes#kasirnya">
 												<?php foreach($hasil_penjualan as $isi){;?>
 													<input type="hidden" name="id_barang[]" value="<?php echo $isi['id_barang'];?>">
-													<input type="hidden" name="id_member[]" value="<?php echo $isi['id_member'];?>">
+													<input type="hidden" name="id_kasir[]" value="<?php echo $isi['id_kasir'];?>">
 													<input type="hidden" name="jumlah[]" value="<?php echo $isi['jumlah'];?>">
 													<input type="hidden" name="total1[]" value="<?php echo $isi['total'];?>">
 													<input type="hidden" name="tgl_input[]" value="<?php echo $isi['tanggal_input'];?>">
@@ -268,10 +278,12 @@ $nama=$_SESSION["nama"];
 												<?php $no++; }?>
 												<tr>
 													<td>Total Semua  </td>
-													<td><input type="text" class="form-control" name="total" value="<?php echo $total_bayar;?>"></td>
+													<td><input style="pointer-events: none;" type="text" class="form-control" name="total" value="<?php echo $total_bayar;?>"></td>
 												
 													<td>Bayar  </td>
 													<td><input type="text" class="form-control" name="bayar" value="<?php echo $bayar;?>"></td>
+													<td>Nama Pelanggan</td>
+													<td><input type="text" class="form-control" name="nama_pelanggan"></td>
 													<td><button class="btn btn-success"><i class="fa fa-shopping-cart"></i> Bayar</button>
 													<?php  if(!empty($_GET['nota'] == 'yes')) {?>
 													 <a class="btn btn-danger" href="../fungsi/hapus/hapus.php?penjualan_kasir=jual">
@@ -281,10 +293,10 @@ $nama=$_SESSION["nama"];
 											<!-- aksi ke table nota -->
 											<tr>
 												<td>Kembali</td>
-												<td><input type="text" class="form-control" value="<?php echo $hitung;?>"></td>
+												<td><input style="pointer-events: none;" type="text" class="form-control" value="<?php echo $hitung;?>"></td>
 												<td></td>
 												<td>
-													<a href="../print.php?nm_member=<?php echo $_SESSION['admin']['nm_member'];?>
+													<a href="../print.php?nama=<?php echo $nama;?>
 													&bayar=<?php echo $bayar;?>&kembali=<?php echo $hitung;?>" target="_blank">
 													<button class="btn btn-default">
 														<i class="fa fa-print"></i> Print Untuk Bukti Pembayaran
@@ -301,8 +313,9 @@ $nama=$_SESSION["nama"];
 						</div>
 				  </div>
               </div>
-          </div>
-      </div>
+    	</section>
+    </section>
+      
 
 
     <!-- js placed at the end of the document so the pages load faster -->

@@ -3,20 +3,29 @@
 	session_start();
 	if(isset($_POST['proses'])){
 		require 'config.php';
-			
+		$koneksi = mysqli_connect("localhost","root","","db_toko");
 		$user = strip_tags($_POST['user']);
 		$pass = strip_tags($_POST['pass']);
 
-		$sql = 'select member.*, login.user, login.pass,login.nama, login.id_login 
-				from member inner join login on member.id_member = login.id_member
+		$sql = 'select * 
+				from login
 				where user =? and pass = md5(?)';
 		$row = $config->prepare($sql);
 		$row -> execute(array($user,$pass));
 		$jum = $row -> rowCount();
+
+		$sql2 = "select * from kasir where user='".$user."' and pass=md5('".$pass."')";
+		$hasil2 = mysqli_query ($koneksi,$sql2);
+		$jumlah = mysqli_num_rows($hasil2);
 		if($jum > 0){
 			$hasil = $row -> fetch();
 			$_SESSION['admin'] = $hasil;
 			echo '<script>window.location="index.php"</script>';
+		}elseif($jumlah > 0){
+			$row2 = mysqli_fetch_assoc($hasil2);
+			$_SESSION["id_kasir"]=$row2["id_kasir"];
+			$_SESSION["nama"]=$row2["nama"];
+			echo '<script>window.location="kasir/index.php"</script>';
 		}else{
 			echo '<script>alert("Login Gagal");history.go(-1);</script>';
 		}
@@ -54,7 +63,14 @@
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-
+      <br>
+      <div class="container container-table">
+	    <div class="row vertical-center-row">
+	        <div class="text-center col-md-4 col-md-offset-4" >
+	        	<a href="home.php" class="btn btn-primary btn-lg" style="margin-top:20px;">Home</a>
+	        </div>
+	    </div>
+	  </div>
 	  <div id="login-page" style="padding-top:3pc;">
 	  	<div class="container">
 		      <form class="form-login" method="POST">
@@ -65,6 +81,7 @@
 		            <input type="password" class="form-control" name="pass" placeholder="Password">
 		            <br>
 		            <button class="btn btn-primary btn-block" name="proses" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+		            <a href="lupa/index.php">Lupa Password?</a>
 		        </div>
 		      </form>
 	  	</div>

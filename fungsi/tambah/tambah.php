@@ -16,10 +16,15 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 		$user = $_POST['user'];
 		$pass = md5($_POST['pass']);
 		$nama = $_POST['nama'];
+		$pertanyaan = $_POST['pertanyaan'];
+		$jawaban = $_POST['jawaban'];
+
 		$data[] = $user;
 		$data[] = $pass;
 		$data[] = $nama;
-		$sql = 'INSERT INTO login (user,pass,nama) VALUES (?,?,?)';
+		$data[] = $pertanyaan;
+		$data[] = $jawaban;
+		$sql = 'INSERT INTO login (user,pass,nama,pertanyaan,jawaban) VALUES (?,?,?,?,?)';
 		$row = $config->prepare($sql);
 		$row->execute($data);
 		echo '<script>window.location="../../index.php?page=admin&&success=tambah-data"</script>';

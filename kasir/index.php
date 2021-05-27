@@ -235,10 +235,10 @@ $nama=$_SESSION["nama"];
 														$unique = uniqid().date("Y-m-d H:i:s");
 														for($x=0;$x<$jumlah_dipilih;$x++){
 
-															$d = array($id_barang[$x],$id_kasir[$x],$jumlah[$x],$total[$x],$nama_pelanggan,$tgl_input[$x],$periode[$x]);
-															$gg = array($unique,$id_barang[$x],$id_kasir[$x],$jumlah[$x],$total[$x],$nama_pelanggan,$tgl_input[$x],$periode[$x]);
-															$sql = "INSERT INTO nota (id_barang,id_kasir,jumlah,total,nama_pelanggan,tanggal_input,periode) VALUES(?,?,?,?,?,?,?)";
-															$sql2 = "INSERT INTO nota_backup (id_nota,id_barang,id_kasir,jumlah,total,nama_pelanggan,tanggal_input,periode) VALUES(?,?,?,?,?,?,?,?)";
+															$d = array($id_barang[$x],$id_kasir[$x],$jumlah[$x],$total[$x],$bayar,$nama_pelanggan,$tgl_input[$x],$periode[$x]);
+															$gg = array($unique,$id_barang[$x],$id_kasir[$x],$jumlah[$x],$total[$x],$bayar,$nama_pelanggan,$tgl_input[$x],$periode[$x]);
+															$sql = "INSERT INTO nota (id_barang,id_kasir,jumlah,total,bayar,nama_pelanggan,tanggal_input,periode) VALUES(?,?,?,?,?,?,?,?)";
+															$sql2 = "INSERT INTO nota_backup (id_nota,id_barang,id_kasir,jumlah,total,bayar,nama_pelanggan,tanggal_input,periode) VALUES(?,?,?,?,?,?,?,?,?)";
 															$row2 = $config->prepare($sql2);
 															$row2->execute($gg);
 															$row = $config->prepare($sql);
@@ -296,8 +296,13 @@ $nama=$_SESSION["nama"];
 												<td><input style="pointer-events: none;" type="text" class="form-control" value="<?php echo $hitung;?>"></td>
 												<td></td>
 												<td>
+													<?php
+													$koneksi = mysqli_connect("localhost","root","","db_toko");
+													$sqlidnota = mysqli_query($koneksi,"SELECT id_nota from nota_backup ORDER BY id_nota DESC");
+													$idnota = mysqli_fetch_array($sqlidnota);
+													?>
 													<a href="../print.php?nama=<?php echo $nama;?>
-													&bayar=<?php echo $bayar;?>&kembali=<?php echo $hitung;?>" target="_blank">
+													&bayar=<?php echo $bayar;?>&kembali=<?php echo $hitung;?>&id_nota=<?php echo $idnota[0];?>" target="_blank">
 													<button class="btn btn-default">
 														<i class="fa fa-print"></i> Print Untuk Bukti Pembayaran
 													</button></a>

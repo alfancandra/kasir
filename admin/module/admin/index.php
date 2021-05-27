@@ -98,7 +98,6 @@
 								</div>										
 								<form action="fungsi/tambah/tambah.php?kasir=tambah" method="POST">
 									<div class="modal-body">
-								
 										<table class="table table-striped bordered">
 											<tr>
 												<td>Username</td>
@@ -112,6 +111,21 @@
 											<tr>
 												<td>Nama</td>
 												<td><input type="text" placeholder="Nama" required class="form-control"  name="nama"></td>
+											</tr>
+											<tr>
+												<td>Pertanyaan</td>
+												<td><select name="pertanyaan" class="form-control">
+									                  <option selected="">Pertanyaan</option>
+									                  <option value="ibu">Siapa Nama ibu kandung anda</option>
+									                  <option value="hewan">Siapa Nama Hewan Peliharaan anda</option>
+									                  <option value="kota">Kota yang pertama kali dikunjungi</option>
+									                  <option value="barang">Apa Barang Favorit anda</option>
+									                  <option value="musik">Apa Judul Musik kesukaan anda</option>
+									                </select></td>
+											</tr>
+											<tr>
+												<td>Jawaban</td>
+												<td><input type="text" placeholder="Jawaban" required class="form-control"  name="jawaban"></td>
 											</tr>
 										</table>
 									</div>

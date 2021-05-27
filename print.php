@@ -1,9 +1,17 @@
 <?php 
 	require 'config.php';
+	$koneksi = mysqli_connect("localhost","root","","db_toko");
 	include $view;
 	$lihat = new view($config);
 	$toko = $lihat -> toko();
 	$hsl = $lihat -> penjualan();
+	$idprint = $_GET['id_nota'];
+	$kodenota = mysqli_query($koneksi,"SELECT id_nota FROM nota_backup WHERE id_nota='".$idprint."';");
+	$nama_pelanggan = mysqli_query($koneksi,"SELECT nama_pelanggan FROM nota_backup WHERE id_nota='".$idprint."';");
+	$tanggal_input = mysqli_query($koneksi,"SELECT tanggal_input FROM nota_backup WHERE nota_backup.id_nota='".$idprint."';");
+	$row = mysqli_fetch_array($nama_pelanggan);
+	$row2 = mysqli_fetch_array($kodenota);
+	$row3 = mysqli_fetch_array($tanggal_input);
 ?>
 <html>
 	<head>
@@ -16,11 +24,17 @@
 			<div class="row">
 				<div class="col-sm-4"></div>
 				<div class="col-sm-4">
-					<center>
-						<p><?php echo $toko['nama_toko'];?></p>
+					<center><b>
+						<br>
+						<p>KARUNIA PLASTIK</p>
 						<p><?php echo $toko['alamat_toko'];?></p>
-						<p>Tanggal : <?php  echo date("j F Y, G:i");?></p>
+						<hr>
+						<p><?php  echo $row3[0];?></p>
 						<p>Kasir : <?php  echo $_GET['nama'];?></p>
+						<p>Pelanggan : <?php echo $row[0];?></p>
+						<p>ID NOTA : <?php echo $row2[0];?></p>
+						<hr>
+						</b>
 					</center>
 					<table class="table table-bordered" style="width:100%;">
 						<tr>
@@ -47,7 +61,7 @@
 						<br/>
 						Kembali : Rp.<?php echo number_format($_GET['kembali']);?>,-
 					</div>
-					<div class="clearfix"></div>
+					<div class="clearfix"></div><br>
 					<center>
 						<p>Terima Kasih Telah berbelanja di toko kami !</p>
 					</center>

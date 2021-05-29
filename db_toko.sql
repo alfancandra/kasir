@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2021 at 06:16 PM
+-- Generation Time: May 29, 2021 at 01:50 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.3.16
 
@@ -314,10 +314,19 @@ CREATE TABLE `penjualan` (
   `id_penjualan` int(11) NOT NULL,
   `id_barang` varchar(255) NOT NULL,
   `id_kasir` int(11) NOT NULL,
+  `satuan` varchar(255) NOT NULL,
   `jumlah` varchar(255) NOT NULL,
   `total` varchar(255) NOT NULL,
   `tanggal_input` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+INSERT INTO `penjualan` (`id_penjualan`, `id_barang`, `id_kasir`, `satuan`, `jumlah`, `total`, `tanggal_input`) VALUES
+(90, 'BR006', 3, 'PAK', '0', '0', '28 May 2021, 20:09'),
+(91, 'BR001', 3, 'PCS', '0', '0', '28 May 2021, 20:11');
 
 -- --------------------------------------------------------
 
@@ -460,7 +469,7 @@ ALTER TABLE `pengumuman`
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `toko`

@@ -1,6 +1,10 @@
 <?php
 session_start();
 require '../config.php';
+if (!isset($_SESSION["id_kasir"])) {
+	echo '<script>window.location="../login.php"</script>';
+	exit;
+}
 $id_kasir=$_SESSION["id_kasir"];
 $nama=$_SESSION["nama"];
 ?>

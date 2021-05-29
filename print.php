@@ -27,12 +27,16 @@
 					<center><b>
 						<br>
 						<p>KARUNIA PLASTIK</p>
-						<p><?php echo $toko['alamat_toko'];?></p>
+						<p style="font-size:12px;">Jl. Raya Ciberem Sumbang (utara lapangan desa ciberem)</p>
 						<hr>
-						<p><?php  echo $row3[0];?></p>
-						<p>Kasir : <?php  echo $_GET['nama'];?></p>
-						<p>Pelanggan : <?php echo $row[0];?></p>
-						<p>ID NOTA : <?php echo $row2[0];?></p>
+						<div style="margin-top:-15px;">
+							<font style="font-size: 12px;">
+							<p><?php  echo $row3[0];?></p>
+							<p>Kasir : <?php  echo $_GET['nama'];?></p>
+							<p>Pelanggan : <?php echo $row[0];?></p>
+							<p>ID NOTA : <?php echo $row2[0];?></p>
+							</font>
+						</div>	
 						<hr>
 						</b>
 					</center>
@@ -63,6 +67,7 @@
 					</div>
 					<div class="clearfix"></div><br>
 					<center>
+						<p style="font-size:12px;">Barang yang sudah dibeli tidak dapat ditukar / dikembalikan</p>
 						<p>Terima Kasih Telah berbelanja di toko kami !</p>
 					</center>
 				</div>

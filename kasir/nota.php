@@ -2,7 +2,7 @@
 session_start();
 require '../config.php';
 if (!isset($_SESSION["id_kasir"])) {
-	echo '<script>window.location="../login_kasir.php"</script>';
+	echo '<script>window.location="../login.php"</script>';
 	exit;
 }
 

@@ -91,16 +91,18 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 	if(!empty($_GET['jual_kasir'])){
 		$id = $_GET['id'];
 		$kasir =  $_GET['id_kasir'];
+		$satuan = $_GET['satuan'];
 		$jumlah = '0';
 		$total = '0';
 		$tgl = date("j F Y, G:i");
 		
 		$data1[] = $id;
 		$data1[] = $kasir;
+		$data1[] = $satuan;
 		$data1[] = $jumlah;
 		$data1[] = $total;
 		$data1[] = $tgl;
-		$sql1 = 'INSERT INTO penjualan (id_barang,id_kasir,jumlah,total,tanggal_input) VALUES (?,?,?,?,?)';
+		$sql1 = 'INSERT INTO penjualan (id_barang,id_kasir,satuan,jumlah,total,tanggal_input) VALUES (?,?,?,?,?,?)';
 		$row1 = $config -> prepare($sql1);
 		$row1 -> execute($data1);
  		echo '<script>window.location="../../kasir/index.php?page=jual&success=tambah-data"</script>';

@@ -2,7 +2,7 @@
 session_start();
 require '../config.php';
 if (!isset($_SESSION["id_kasir"])) {
-	echo '<script>window.location="../login_kasir.php"</script>';
+	echo '<script>window.location="../login.php"</script>';
 	exit;
 }
 
@@ -166,6 +166,7 @@ $nama=$_SESSION["nama"];
 												<tr>
 													<td> No</td>
 													<td> Nama Barang</td>
+													<td> Satuan</td>
 													<td style="width:10%;"> Jumlah</td>
 													<td style="width:20%;"> Total</td>
 													<td> Kasir</td>
@@ -186,6 +187,7 @@ $nama=$_SESSION["nama"];
 												<tr>
 													<td><?php echo $no;?></td>
 													<td><?php echo $isi['nama_barang'];?></td>
+													<td><?php echo $isi['satuan'];?></td>
 													<td>
 												<!-- aksi ke table penjualan -->
 												<form method="POST" action="../fungsi/edit/edit.php?jual_kasir=jual">

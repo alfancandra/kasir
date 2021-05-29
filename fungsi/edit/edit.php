@@ -297,8 +297,8 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 				<th>Nama Barang</th>
 				<th>Merk</th>
 				<th>Harga Jual</th>
-				<th>Aksi</th>
 				<th>Satuan</th>
+				<th>Aksi</th>
 			</tr>
 		<?php foreach($hasil1 as $hasil){?>
 			<tr>
@@ -308,7 +308,7 @@ if(!empty($_SESSION['admin']) || !empty($_SESSION['id_kasir'])){
 				<td><?php echo $hasil['harga_jual'];?></td>
 				<td><?php echo $hasil['satuan_barang'];?></td>
 				<td>
-				<a href="../fungsi/tambah/tambah.php?jual_kasir=jual&id=<?php echo $hasil['id_barang'];?>&id_kasir=<?php echo $_SESSION['id_kasir'];?>" 
+				<a href="../fungsi/tambah/tambah.php?jual_kasir=jual&id=<?php echo $hasil['id_barang'];?>&id_kasir=<?php echo $_SESSION['id_kasir'];?>&satuan=<?php echo $hasil['satuan_barang'];?>" 
 					class="btn btn-success">
 					<i class="fa fa-shopping-cart"></i></a></td>
 			</tr>
